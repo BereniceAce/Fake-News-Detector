@@ -17,6 +17,8 @@ REAL_INDICATORS = [
 NONVALID_URLS = [".com", "cust-login.ie", "http", "-"]
 VALID_URLS = [".edu", ".gov", "https", ".org"]
 
+spellCheck = SpellChecker()
+
 def sanitize_text(text):
     if text is None: return ""
     text = str(text).lower()
@@ -35,10 +37,7 @@ def punctuation_pts(text):
     if text.isupper(): bad_pts += 1
     return 0, bad_pts
 
-spellCheck = SpellChecker()
-
 def conciseness(text):
-    #spellCheck = SpellChecker()
     words = text.split()
     misspelled = spellCheck.unknown(words)
     return 0, len(misspelled)

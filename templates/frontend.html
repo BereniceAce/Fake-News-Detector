@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fake News Detector</title>
+    <link rel="stylesheet" href="/static/frontend.css">
+</head>
+<body>
+    <h1>Fake News Detector</h1>
+
+    <h2>Enter a URL (optional):</h2>
+    <input type="text" id="urlInput" placeholder="Enter website URL">
+
+    <h2>Or paste text to analyze:</h2>
+    <textarea id="textInput" placeholder="Paste article text here..."></textarea><br>
+
+    <button onclick="analyze()">Analyze</button>
+
+    <h3>AI Prediction:</h3>
+    <p id="aiResult" style="font-weight: bold;"></p>
+
+    <h3>Feature Breakdown:</h3>
+    <div id="breakdownBox"></div>
+
+    <h3>User Feedback (optional):</h3>
+    <button onclick="confirmLabel('fake')">Mark as Fake</button>
+    <button onclick="confirmLabel('real')">Mark as Real</button>
+
+    <script>
+        let lastText = "";
+        let lastUrl = "";
+
+        async function analyze() {
+            const text = document.getElementById("textInput").value.trim();
+            const url = document.getElementById("urlInput").value.trim();
+
+            if (!text) {
+                alert("Please paste some text.");
+                return;
+            }
+
+            lastText = text;
+            lastUrl = url;
+
+            try {
+                const response = await fetch("/predict", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({ text: text, url: url })
+                });
+
+                const result = await response.json();
+
+                document.getElementById("aiResult").textContent = 
+                `Prediction: ${result.result.toUpperCase()} (Probability: ${result.final_score.toFixed(2)}%)`;
+
+                const feats = result.features;
+                let breakdownText = "";
+                for (const [k,v] of Object.entries(feats)) {
+                    breakdownText += `${k}: ${v}\n`;
+                    }
+                document.getElementById("breakdownBox").textContent = breakdownText;
+
+
+            } catch (err) {
+                console.error("Error communicating with backend:", err);
+            }
+        }
+
+        async function confirmLabel(label) {
+            if (!lastText) {
+                alert("No article analyzed yet.");
+                return;
+            }
+
+            try {
+                const response = await fetch("/feedback", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({ text: lastText, url: lastUrl, label: label })
+                });
+
+                const result = await response.json();
+                alert(result.message);
+
+            } catch (err) {
+                console.error("Error sending feedback:", err);
+            }
+        }
+    </script>
+</body>
+</html>

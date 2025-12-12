@@ -1,7 +1,7 @@
 import pandas as pd
 import json
 from collections import defaultdict
-from features import extract_features
+from app.features import extract_features
 
 def train_model(fake_csv="data/Fake.csv", real_csv="data/True.csv", output="model.json"):
     fake_df = pd.read_csv(fake_csv)
