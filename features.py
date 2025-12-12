@@ -35,8 +35,10 @@ def punctuation_pts(text):
     if text.isupper(): bad_pts += 1
     return 0, bad_pts
 
+spellCheck = SpellChecker()
+
 def conciseness(text):
-    spellCheck = SpellChecker()
+    #spellCheck = SpellChecker()
     words = text.split()
     misspelled = spellCheck.unknown(words)
     return 0, len(misspelled)
