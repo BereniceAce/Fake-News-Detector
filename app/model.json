@@ -1,22 +1,30 @@
 {
   "feature_probs": {
     "Fake": {
-      "url_bad": 0.16666666666666666,
-      "punct_bad": 0.16666666666666666,
-      "fake_kw": 0.16666666666666666,
-      "spell_bad": 0.16666666666666666,
-      "real_kw": 0.16666666666666666,
-      "url_good": 0.16666666666666666
+      "technical_high": 0.08,
+      "technical_medium": 0.20,
+      "technical_low": 0.72,
+      "academic_high": 0.04,
+      "academic_medium": 0.10,
+      "academic_low": 0.86,
+      "punct_bad": 0.18,
+      "fake_kw": 0.40,
+      "spell_bad": 0.22,
+      "real_kw": 0.05
     },
     "Real": {
-      "url_bad": 0.0111731843575419,
-      "punct_bad": 0.00558659217877095,
-      "fake_kw": 0.00558659217877095,
-      "spell_bad": 0.9385474860335196,
-      "real_kw": 0.0223463687150838,
-      "url_good": 0.01675977653631285
+      "technical_high": 0.60,
+      "technical_medium": 0.30,
+      "technical_low": 0.10,
+      "academic_high": 0.70,
+      "academic_medium": 0.20,
+      "academic_low": 0.10,
+      "punct_bad": 0.05,
+      "fake_kw": 0.03,
+      "spell_bad": 0.12,
+      "real_kw": 0.70
     }
   },
-  "P_Fake": 0.3333333333333333,
-  "P_Real": 0.6666666666666666
+  "P_Fake": 0.25,
+  "P_Real": 0.75
 }
